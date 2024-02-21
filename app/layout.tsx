@@ -9,7 +9,7 @@ const IBMPlex = IBM_Plex_Sans({  subsets: ["latin"]
  });
 
 export const metadata: Metadata = {
-  title: "Artistry aI",
+  title: "Artistry AI",
   description: "Artistry AI is a cutting-edge platform leveraging artificial intelligence to unleash your creativity. Our intuitive tools empower users to explore new artistic horizons, offering a seamless experience from conception to realization. Created with Next.js, Artistry AI delivers unparalleled performance and flexibility, ensuring a smooth journey for every artist",
 };
 
