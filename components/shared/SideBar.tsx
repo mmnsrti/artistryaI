@@ -1,10 +1,11 @@
 "use client";
 import { navLinks } from "@/constants";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { Button } from "../ui/button";
 
 const SideBar = () => {
   const pathName = usePathname();
@@ -13,7 +14,7 @@ const SideBar = () => {
       <div className="flex size-full flex-col gap-4">
         <Link href="/" className="sidebar-logo">
           <Image
-            src="/assets/icons/close.svg"
+            src="/assets/logo.png"
             alt="logo"
             width={180}
             height={28}
@@ -22,7 +23,7 @@ const SideBar = () => {
         <nav className="sidebar-nav">
           {/* <SignedIn> */}
           <ul className="sidebar-nav_elements">
-            {navLinks.map((link) => {
+            {navLinks.slice(0,6).map((link) => {
               const isActive = link.route === pathName;
               return (
                 <li
@@ -42,11 +43,16 @@ const SideBar = () => {
                 </li>
               );
             })}
+            <li className="flex-center cursor-pointer gap-2 p-4">
+                <UserButton/>
+            </li>
           </ul>
           {/* </SignedIn> */}
 
           {/* <SignedOut> */}
-             
+             <Button asChild className="button bg-purple-gradient bg-cover">
+                <Link href="/signin">Login</Link>
+             </Button>
           {/* </SignedOut> */}
         </nav>
       </div>
