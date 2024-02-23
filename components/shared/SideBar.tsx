@@ -16,72 +16,70 @@ const SideBar = () => {
           <Image src="/assets/logo.png" alt="logo" width={180} height={28} />
         </Link>
         <nav className="sidebar-nav">
-          {/* <SignedIn> */}
-          <ul className="sidebar-nav_elements">
-            {navLinks.slice(0, 6).map((link) => {
-              const isActive = link.route === pathName;
-              return (
-                <li
-                  key={link.route}
-                  className={`sidebar-nav_element cursor-pointer group ${
-                    isActive
-                      ? "bg-purple-gradient text-white "
-                      : "text-gray-700"
-                  } `}
-                >
-                  <Link href={link.route} className="sidebar-link">
-                    <Image
-                      alt="logo"
-                      src={link.icon}
-                      width={36}
-                      height={36}
-                      className={`${isActive && "brightness-200"}`}
-                    />
-                    <span className="sidebar-link_text">{link.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          <SignedIn>
+            <ul className="sidebar-nav_elements">
+              {navLinks.slice(0, 6).map((link) => {
+                const isActive = link.route === pathName;
+                return (
+                  <li
+                    key={link.route}
+                    className={`sidebar-nav_element cursor-pointer group ${
+                      isActive
+                        ? "bg-purple-gradient text-white "
+                        : "text-gray-700"
+                    } `}
+                  >
+                    <Link href={link.route} className="sidebar-link">
+                      <Image
+                        alt="logo"
+                        src={link.icon}
+                        width={36}
+                        height={36}
+                        className={`${isActive && "brightness-200"}`}
+                      />
+                      <span className="sidebar-link_text">{link.label}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
 
-          <ul className="sidebar-nav_elements">
-          {navLinks.slice(6).map((link) => {
-              const isActive = link.route === pathName;
-              return (
-                <li
-                  key={link.route}
-                  className={`sidebar-nav_element cursor-pointer group ${
-                    isActive
-                      ? "bg-purple-gradient text-white "
-                      : "text-gray-700"
-                  } `}
-                >
-                  <Link href={link.route} className="sidebar-link">
-                    <Image
-                      alt="logo"
-                      src={link.icon}
-                      width={36}
-                      height={36}
-                      className={`${isActive && "brightness-200"}`}
-                    />
-                    <span className="sidebar-link_text">{link.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
-            <li className="flex-center cursor-pointer gap-2 p-4">
-           
-              <UserButton />
-            </li>
-          </ul>
+            <ul className="sidebar-nav_elements">
+              {navLinks.slice(6).map((link) => {
+                const isActive = link.route === pathName;
+                return (
+                  <li
+                    key={link.route}
+                    className={`sidebar-nav_element cursor-pointer group ${
+                      isActive
+                        ? "bg-purple-gradient text-white "
+                        : "text-gray-700"
+                    } `}
+                  >
+                    <Link href={link.route} className="sidebar-link">
+                      <Image
+                        alt="logo"
+                        src={link.icon}
+                        width={36}
+                        height={36}
+                        className={`${isActive && "brightness-200"}`}
+                      />
+                      <span className="sidebar-link_text">{link.label}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+              <li className="flex-center cursor-pointer gap-2 p-4">
+                <UserButton showName  afterSignOutUrl="/" />
+              </li>
+            </ul>
+          </SignedIn>
 
-          {/* </SignedIn> */}
-
-          {/* <SignedOut> */}
-          <Button asChild className="button bg-purple-gradient bg-cover">
-            <Link href="/signin">Login</Link>
-          </Button>
-          {/* </SignedOut> */}
+          <SignedOut>
+            <Button asChild className="button bg-purple-gradient bg-cover">
+              <Link href="/signin">Login</Link>
+            </Button>
+          </SignedOut>
         </nav>
       </div>
     </aside>
