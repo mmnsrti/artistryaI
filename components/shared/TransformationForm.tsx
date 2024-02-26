@@ -13,9 +13,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { defaultValues } from "@/constants";
 import { CustomField } from "./CustomField";
+import { useState } from "react";
 export const formSchema = z.object({
   title: z.string(),
   aspectRatio: z.string().optional(),
@@ -25,7 +33,13 @@ export const formSchema = z.object({
 const TransformationForm = ({
   data = null,
   action,
+  type,
+  creditBalance,
 }: TransformationFormProps) => {
+  const [image, setImage] = useState(data);
+  const [newTransformation, setNewTransformation] =
+    useState<Transformations | null>(null);
+  
   const initialValues =
     data && action === "Update"
       ? {
@@ -56,8 +70,23 @@ const TransformationForm = ({
           name="title"
           formLabel="Image Title"
           render={({ field }) => <Input {...field} />}
-          
         />
+        {type === "fill" && (
+          <CustomField
+            render={({ field }) => (
+              <Select>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Theme" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">Light</SelectItem>
+                  <SelectItem value="dark">Dark</SelectItem>
+                  <SelectItem value="system">System</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        )}
       </form>
     </Form>
   );
