@@ -40,11 +40,15 @@ const TransformationForm = ({
   action,
   type,
   creditBalance,
+  config = null,
 }: TransformationFormProps) => {
   const TransformationType = transformationTypes[type];
   const [image, setImage] = useState(data);
   const [newTransformation, setNewTransformation] =
     useState<Transformations | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTransforming, setIsTransforming] = useState(false);
+  const [transformationConfig, setTransformationConfig] = useState(config);
 
   const initialValues =
     data && action === "Update"
@@ -67,13 +71,19 @@ const TransformationForm = ({
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
-  const onInputChangeHandler =(fieldName:string, value:string,type:string,onChangeField:(value:string)=>void)=>{
-
-  }
+  const onInputChangeHandler = (
+    fieldName: string,
+    value: string,
+    type: string,
+    onChangeField: (value: string) => void
+  ) => {};
   const onSelectFieldHandler = (
     value: string,
     onChangeField: (value: string) => void
   ) => {};
+  const onTransformHandler =() =>{
+
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -124,34 +134,58 @@ const TransformationForm = ({
                 <Input
                   value={field.value}
                   className="input-field"
-                  onChange={(e)=>onInputChangeHandler(
-                    'prompt',e.target.value,type,field.onChange
-                  )}
+                  onChange={(e) =>
+                    onInputChangeHandler(
+                      "prompt",
+                      e.target.value,
+                      type,
+                      field.onChange
+                    )
+                  }
                 />
               )}
             />
-            {type==='recolor' && (
-                 <CustomField
-                 control={form.control}
-                 className="w-full "
-                 name="color"
-                 formLabel='Replacement color'
-                 render={({ field }) => (
-                   <Input
-                     value={field.value}
-                     className="input-field"
-                     onChange={(e)=>onInputChangeHandler(
-                       'prompt',e.target.value,'recolor',field.onChange
-                     )}
-                   />
-                 )}
-               />
+            {type === "recolor" && (
+              <CustomField
+                control={form.control}
+                className="w-full "
+                name="color"
+                formLabel="Replacement color"
+                render={({ field }) => (
+                  <Input
+                    value={field.value}
+                    className="input-field"
+                    onChange={(e) =>
+                      onInputChangeHandler(
+                        "prompt",
+                        e.target.value,
+                        "recolor",
+                        field.onChange
+                      )
+                    }
+                  />
+                )}
+              />
             )}
           </div>
         )}
-        <Button type="submit">
-          Submit
-        </Button>
+        <div>
+          <Button
+            type="button"
+            className="submit-button capitalize"
+            disabled={isTransforming||newTransformation===null}
+            onClick={onTransformHandler}
+          >
+            {isTransforming?'Transforming ...' :'Apply Transformation'}
+          </Button>
+          <Button
+            type="submit"
+            className="submit-button capitalize"
+            disabled={isSubmitting}
+          >
+            {isSubmitting?'Submitting ....':'Save Image'}
+          </Button>
+        </div>
       </form>
     </Form>
   );
