@@ -21,9 +21,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { defaultValues, transformationTypes } from "@/constants";
+import {
+  aspectRatioOptions,
+  defaultValues,
+  transformationTypes,
+} from "@/constants";
 import { CustomField } from "./CustomField";
 import { useState } from "react";
+import { AspectRatioKey } from "@/lib/utils";
 export const formSchema = z.object({
   title: z.string(),
   aspectRatio: z.string().optional(),
@@ -62,6 +67,9 @@ const TransformationForm = ({
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
+  const onInputChangeHandler =(fieldName:string, value:string,type:string,onChangeField:(value:string)=>void)=>{
+
+  }
   const onSelectFieldHandler = (
     value: string,
     onChangeField: (value: string) => void
@@ -79,23 +87,71 @@ const TransformationForm = ({
         {type === "fill" && (
           <CustomField
             control={form.control}
-            className="w-full"
-            formLabel="Aspect Ratio"
             name="aspectRatio"
+            formLabel="Aspect Ratio"
+            className="w-full"
             render={({ field }) => (
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Theme" />
+              <Select
+                onValueChange={(value) =>
+                  onSelectFieldHandler(value, field.onChange)
+                }
+                value={field.value}
+              >
+                <SelectTrigger className="select-field">
+                  <SelectValue placeholder="Select size" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="light">Light</SelectItem>
-                  <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
+                  {Object.keys(aspectRatioOptions).map((key) => (
+                    <SelectItem key={key} value={key} className="select-item">
+                      {aspectRatioOptions[key as AspectRatioKey].label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}
           />
         )}
+        {(type === "remove" || type === "recolor") && (
+          <div className="prompt-field">
+            <CustomField
+              control={form.control}
+              className="w-full input-field"
+              name="prompt"
+              formLabel={
+                type === "remove" ? "Object to remove" : "Object to recolor"
+              }
+              render={({ field }) => (
+                <Input
+                  value={field.value}
+                  className="input-field"
+                  onChange={(e)=>onInputChangeHandler(
+                    'prompt',e.target.value,type,field.onChange
+                  )}
+                />
+              )}
+            />
+            {type==='recolor' && (
+                 <CustomField
+                 control={form.control}
+                 className="w-full "
+                 name="color"
+                 formLabel='Replacement color'
+                 render={({ field }) => (
+                   <Input
+                     value={field.value}
+                     className="input-field"
+                     onChange={(e)=>onInputChangeHandler(
+                       'prompt',e.target.value,'recolor',field.onChange
+                     )}
+                   />
+                 )}
+               />
+            )}
+          </div>
+        )}
+        <Button type="submit">
+          Submit
+        </Button>
       </form>
     </Form>
   );

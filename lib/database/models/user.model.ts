@@ -9,16 +9,16 @@ export interface UserProps extends Document {
   planId?: number;
   creditBalance?: number;
 }
-
 const UserSchema = new Schema<UserProps>({
-  clerkId: { type: String, require: true, unique: true },
-  email: { type: String, require: true, unique: true }, //enum('resize','c
-  userName: { type: String, require: true, unique: true },
-  photo: { type: String, require: true },
+  clerkId: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  userName: { type: String, required: true, unique: true },
+  photo: { type: String, required: true },
   firstName: { type: String },
   lastName: { type: String },
   planId: { type: Number },
   creditBalance: { type: Number, default: 10 },
 });
-const User = models?.Image || model("User", UserSchema);
+
+const User = models?.User || model("User", UserSchema);
 export default User;
