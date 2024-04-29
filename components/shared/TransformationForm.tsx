@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { defaultValues } from "@/constants";
+import { defaultValues, transformationTypes } from "@/constants";
 import { CustomField } from "./CustomField";
 import { useState } from "react";
 export const formSchema = z.object({
@@ -36,10 +36,11 @@ const TransformationForm = ({
   type,
   creditBalance,
 }: TransformationFormProps) => {
+  const TransformationType = transformationTypes[type];
   const [image, setImage] = useState(data);
   const [newTransformation, setNewTransformation] =
     useState<Transformations | null>(null);
-  
+
   const initialValues =
     data && action === "Update"
       ? {
@@ -61,6 +62,10 @@ const TransformationForm = ({
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
+  const onSelectFieldHandler = (
+    value: string,
+    onChangeField: (value: string) => void
+  ) => {};
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -73,6 +78,10 @@ const TransformationForm = ({
         />
         {type === "fill" && (
           <CustomField
+            control={form.control}
+            className="w-full"
+            formLabel="Aspect Ratio"
+            name="aspectRatio"
             render={({ field }) => (
               <Select>
                 <SelectTrigger className="w-[180px]">
