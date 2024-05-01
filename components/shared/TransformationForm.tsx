@@ -30,6 +30,7 @@ import { CustomField } from "./CustomField";
 import { useState, useTransition } from "react";
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 import { updateCredits } from "@/lib/actions/user.actions";
+import MediaUploader from "./MediaUploader";
 export const formSchema = z.object({
   title: z.string(),
   aspectRatio: z.string().optional(),
@@ -50,7 +51,7 @@ const TransformationForm = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config);
-  const [isPending, startTransition] = useTransition()
+  const [isPending, startTransition] = useTransition();
 
   const initialValues =
     data && action === "Update"
@@ -108,18 +109,18 @@ const TransformationForm = ({
   };
 
   const onTransformHandler = async () => {
-    setIsTransforming(true)
+    setIsTransforming(true);
 
     setTransformationConfig(
       deepMergeObjects(newTransformation, transformationConfig)
-    )
+    );
 
-    setNewTransformation(null)
+    setNewTransformation(null);
 
     startTransition(async () => {
       // await updateCredits(userId, creditFee)
-    })
-  }
+    });
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -205,6 +206,23 @@ const TransformationForm = ({
             )}
           </div>
         )}
+        <div className="media-uploader-field">
+          <CustomField
+            control={form.control}
+            className="w-full flex flex-col size-full "
+            name="publicId"
+            render={({ field }) => (
+              <MediaUploader
+                onValueChange={field.onChange}
+                setImage={setImage}
+                publicId={field.value}
+                image={image}
+                type={type}
+              />
+            )}
+          />
+        </div>
+
         <div>
           <Button
             type="button"
