@@ -119,7 +119,7 @@ const TransformationForm = ({
     setNewTransformation(null);
 
     startTransition(async () => {
-      await updateCredits(userId, -1)
+      await updateCredits(userId, -1); // 'userId' is not defined
     });
   };
   return (
