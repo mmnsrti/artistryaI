@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
@@ -19,16 +20,16 @@ const MediaUploader = ({
   type,
 }: MediaUploader) => {
   const { toast } = useToast();
-  const onUploadSuccessHandler = () => {
-    setImage((prevState:any)=>({
+  const onUploadSuccessHandler = (result: any) => {
+    setImage((prevState: any) => ({
       ...prevState,
 
-      publicId,
-      image: dataUrl(image),
-      width: getImageSize(image).width,
-      
-
-    }))
+      publicId: result?.info?.public_id,
+      width: result?.info?.width,
+      height: result?.info?.height,
+      secureUrl: result?.info?.secureUrl,
+    }));
+    onValueChange(result?.info?.public_id);
     toast({
       title: "image uploaded successfully ",
       description: "1 credit has been used",
@@ -60,28 +61,31 @@ const MediaUploader = ({
               <h3 className="h3-bold text-dark-500">Original</h3>
               {publicId ? (
                 <>
-                <div className="cursor-pointer overflow-hidden rounded-[10px]"> 
-                  <CldImage
-                    src={publicId}
-                    alt="image"
-                    width={getImageSize(type,image ,'width')}
-                    height={getImageSize(type,image ,'height')}
-                    className="media-uploader_cldImage"
-                    sizes="(max-width:767px) 100vw ,50vw"
-                    placeholder={dataUrl as PlaceholderValue}
-                  />
-                </div>
+                  <div className="cursor-pointer overflow-hidden rounded-[10px]">
+                    <CldImage
+                      src={publicId}
+                      alt="image"
+                      width={getImageSize(type, image, "width")}
+                      height={getImageSize(type, image, "height")}
+                      className="media-uploader_cldImage"
+                      sizes="(max-width:767px) 100vw ,50vw"
+                      placeholder={dataUrl as PlaceholderValue}
+                    />
+                  </div>
                 </>
               ) : (
                 <div className="media-uploader_cta" onClick={() => open()}>
                   {" "}
                   <div className="media-uploader_cta-image">
-                    <Image src="/assets/icons/add.svg" alt="add" width={20} height={20}/>
+                    <Image
+                      src="/assets/icons/add.svg"
+                      alt="add"
+                      width={20}
+                      height={20}
+                    />
                   </div>{" "}
                   <p className="p-14-medium">Click here to upload</p>
-
                 </div>
-                
               )}
             </div>
           );
