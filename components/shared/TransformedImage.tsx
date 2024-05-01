@@ -1,6 +1,10 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { CldImage } from "next-cloudinary";
+import { dataUrl, debounce, getImageSize } from "@/lib/utils";
+import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
+import LoadingComponent from "../loading/LoadingComponent";
 
 const TransformedImage = ({
   image,
@@ -29,7 +33,27 @@ const TransformedImage = ({
         )}
       </div>
       {image?.publicId && transformationConfig ? (
-        <div className="relative"></div>
+        <div className="relative">
+          <CldImage
+            src={image?.publicId}
+            alt={image.title}
+            width={getImageSize(type, image, "width")}
+            height={getImageSize(type, image, "height")}
+            className="transformed-image"
+            sizes="(max-width:767px) 100vw ,50vw"
+            placeholder={dataUrl as PlaceholderValue}
+            onLoad={() => {
+              setIsTransforming && setIsTransforming(false);
+            }}
+            onError={() => {
+              debounce(() => {
+                setIsTransforming && setIsTransforming(false);
+              }, 8000);
+            }}
+            {...transformationConfig}
+          />
+          {isTransforming && (<LoadingComponent/>)}
+        </div>
       ) : (
         <div className="transformed-placeholder"> Transformed Image</div>
       )}
