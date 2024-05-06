@@ -4,7 +4,7 @@ export interface ImageProps extends Document {
   title: string;
   TransformationType: string; // Assuming these are the only allowed values
   publicId: string;
-  secureUrl: URL;
+  secureURL: URL;
   width?: number; // Optional properties denoted by '?'
   height?: number;
   config?: object;
@@ -28,11 +28,11 @@ const ImageSchema = new Schema<ImageProps>({
   title: { type: String, require: true },
   TransformationType: { type: String, require: true }, //enum('resize','c
   publicId: { type: String, require: true },
-  secureUrl: { type: URL, require: true },
+  secureURL: { type: String, require: true },
   width: { type: Number },
   height: { type: Number },
   config: { type: Object },
-  TransformationUrl: { type: URL },
+  TransformationUrl: { type: String },
   aspectRatio: { type: String },
   color: { type: String },
   prompt: { type: String },

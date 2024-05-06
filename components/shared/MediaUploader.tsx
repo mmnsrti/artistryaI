@@ -27,7 +27,7 @@ const MediaUploader = ({
       publicId: result?.info?.public_id,
       width: result?.info?.width,
       height: result?.info?.height,
-      secureUrl: result?.info?.secureUrl,
+      secureURL: result?.info?.secureUrl,
     }));
     onValueChange(result?.info?.public_id);
     toast({
