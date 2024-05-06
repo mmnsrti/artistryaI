@@ -48,22 +48,21 @@ export async function updateImage({ image, userId, path }: AddImageParams) {
     handleError(error);
   }
 }
-export async function deleteImage({ imageId }: string) {
+export async function deleteImage( imageId : string) {
   try {
     await connectToDatabase();
     await Image.findByIdAndDelete(imageId);
-    revalidatePath(path);
-    return JSON.parse(JSON.stringify(image));
   } catch (error) {
     handleError(error);
   } finally {
     redirect("/");
   }
 }
-export async function getImageById({ imageId }: string) {
+export async function getImageById(imageId :string ) {
   try {
     await connectToDatabase();
-    revalidatePath(path);
+    const image =await populateUser(Image.findById(imageId))
+    if (!image) throw new Error("image not found");
     return JSON.parse(JSON.stringify(image));
   } catch (error) {
     handleError(error);
