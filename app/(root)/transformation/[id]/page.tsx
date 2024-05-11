@@ -1,4 +1,3 @@
-"use client"
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,10 +9,10 @@ import { getImageById } from "@/lib/actions/image.actions";
 import { getImageSize } from "@/lib/utils";
 import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 
-const ImageDetails = ({ params: { id } }: SearchParamProps) => {
+const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
   const { userId } = auth();
 
-  const image = getImageById(id);
+  const image = await getImageById(id);
 
   return (
     <>
