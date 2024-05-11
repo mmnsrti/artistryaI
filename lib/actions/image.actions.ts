@@ -83,11 +83,12 @@ export async function getAllImages({
       process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
     const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
     const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
-    console.log(CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET);
     cloudinary.config({
       cloud_name: NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
       api_key: CLOUDINARY_API_SECRET,
       api_secret: CLOUDINARY_API_KEY,
+      secure: true,
+
     });
 
     let expression = "folder=artisty_ai";
