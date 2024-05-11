@@ -20,6 +20,7 @@ declare type UpdateUserParams = {
 // ====== IMAGE PARAMS
 declare type AddImageParams = {
   image: {
+    _id?: string; // Add this line
     title: string;
     publicId: string;
     transformationType: string;
