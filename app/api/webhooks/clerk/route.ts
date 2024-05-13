@@ -25,7 +25,7 @@ export async function POST(req: Request) {
 
   // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response("Error occurred -- no svix headers", {
+    return new Response("Error occured -- no svix headers", {
       status: 400,
     });
   }
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     }) as WebhookEvent;
   } catch (err) {
     console.error("Error verifying webhook:", err);
-    return new Response("Error occurred", {
+    return new Response("Error occured", {
       status: 400,
     });
   }
@@ -65,7 +65,7 @@ export async function POST(req: Request) {
     const user = {
       clerkId: id,
       email: email_addresses[0].email_address,
-      username: username!,
+      userName: username!,
       firstName: first_name,
       lastName: last_name,
       photo: image_url,
