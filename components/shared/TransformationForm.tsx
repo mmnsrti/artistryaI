@@ -201,7 +201,7 @@ const TransformationForm = ({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <CustomField
           control={form.control}
-          className="w-full input-field"
+          className="w-full"
           name="title"
           formLabel="Image Title"
           render={({ field }) => <Input {...field} />}
@@ -237,7 +237,7 @@ const TransformationForm = ({
           <div className="prompt-field">
             <CustomField
               control={form.control}
-              className="w-full input-field"
+              className="w-full "
               name="prompt"
               formLabel={
                 type === "remove" ? "Object to remove" : "Object to recolor"
