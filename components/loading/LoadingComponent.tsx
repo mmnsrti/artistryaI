@@ -2,15 +2,8 @@ import React from "react";
 
 const LoadingComponent = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-white">
-      <div className="spinner-box">
-        <div className="leo-border-1">
-          <div className="leo-core-1"></div>
-        </div>
-        <div className="leo-border-2">
-          <div className="leo-core-2"></div>
-        </div>
-      </div>
+    <div className="col-sm-2 flex justify-center flex-center col-xs-4 text-center">
+      <div className="dots-loader"> </div>
     </div>
   );
 };
