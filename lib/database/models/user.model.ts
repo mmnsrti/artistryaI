@@ -8,7 +8,6 @@ export interface UserProps extends Document {
   lastName?: string;
   planId?: number;
   creditBalance?: number;
-  plan? : string;
 }
 const UserSchema = new Schema<UserProps>({
   clerkId: { type: String, required: true, unique: true },
@@ -19,7 +18,6 @@ const UserSchema = new Schema<UserProps>({
   lastName: { type: String },
   planId: { type: Number },
   creditBalance: { type: Number, default: 10 },
-  plan: {type: String},
 });
 
 const User = models?.User || model("User", UserSchema);
