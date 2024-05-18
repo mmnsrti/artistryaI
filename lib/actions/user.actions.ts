@@ -77,7 +77,7 @@ export async function deleteUser(clerkId: string) {
 export async function updateCredits(
   userId: string,
   creditFee: number,
-  plan: string
+  plan?: string
 ) {
   try {
     await connectToDatabase();
